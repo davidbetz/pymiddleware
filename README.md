@@ -49,7 +49,7 @@ Now to run it. Use ```set``` to set an array of middleware and ```add``` to add 
 
         # handler['counter'] == 3
 
-In this case, there is no initial context and each of the three middleware increment a counter ending with handler['counter'] == 3
+In this case, there is no initial context and each of the three middleware increment a counter ending with ```handler['counter'] == 3```.
 
 You can skip the entire middleware class stuff too:
 
