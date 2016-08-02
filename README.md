@@ -29,7 +29,7 @@ Following are examples of using this, see ```test_middleware.py``` for full exam
 
             return func
 
-So, have a creation function which returns a function. This inner fuction accepts the middleware array and the data context and returns next(mwa) to create a middleware chain.
+When using a class, add a ```create``` function which returns a function. This inner fuction accepts the middleware array and the data context and returns ```next(mwa)``` to create a middleware chain.
 
 For this example, I'll add two more:
 
@@ -51,7 +51,7 @@ Now to run it. Use ```set``` to set an array of middleware and ```add``` to add 
 
 In this case, there is no initial context and each of the three middleware increment a counter ending with ```handler['counter'] == 3```.
 
-You can skip the entire middleware class stuff too:
+You can skip the entire class stuff too:
 
     handler = Handler()
     def inline(wma, context):
@@ -59,7 +59,6 @@ You can skip the entire middleware class stuff too:
     handler.add(inline)
     handler.execute()
     # handler['myvalue'] == 12
-
     
 Use the following to send initial context:
 
