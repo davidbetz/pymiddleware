@@ -23,8 +23,33 @@ class AdditionMiddleware2(AdditionMiddleware1):
 class AdditionMiddleware3(AdditionMiddleware1):
     pass
 
+class StopMiddleware(Middleware):
+    def create(self):
+        def func(mwa, context):
+            pass
+
+        return func
+
+class MultiReadWriteMiddleware(Middleware):
+    def create(self):
+        def func(mwa, context):
+            (a, b, c, counter) = self.read(context, 'a', 'b', 'c', 'counter')
+
+            self.write(context, **{ 'a': a * 2, 'b': b * 2, 'counter': counter * 2})
+
+            return next(mwa)
+
+        return func
+
 
 class TestBuilderCreator(unittest.TestCase):
+    def test_stop(self):
+        handler = Handler()
+        handler.add(AdditionMiddleware1)
+        handler.add(StopMiddleware)
+        handler.execute()
+        self.assertEqual(handler['counter'], 1)
+
     def test_add(self):
         handler = Handler()
         handler.add(AdditionMiddleware1)
@@ -71,6 +96,18 @@ class TestBuilderCreator(unittest.TestCase):
         handler.add(inline)
         handler.execute()
         self.assertEqual(handler['a'], 3)
+
+    def test_multiread(self):
+        handler = Handler(**{'a': 10, 'b': 20, 'c': 30})
+        handler.add(AdditionMiddleware1)
+        handler.add(MultiReadWriteMiddleware)
+        handler.add(AdditionMiddleware2)
+        handler.execute()
+
+        self.assertEqual(handler['a'], 20)
+        self.assertEqual(handler['b'], 40)
+        self.assertEqual(handler['c'], 30)
+        self.assertEqual(handler['counter'], 3)
 
 
 if __name__ == '__main__':

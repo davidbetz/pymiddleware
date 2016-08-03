@@ -3,8 +3,14 @@ import types
 class Middleware():
     def __init__(self, action=None):
         self._action = action
-    
-    def execute(self, mwa, context):        
+
+    def read(self, context, *args):
+        return [context[_] for _ in args]
+
+    def write(self, context, **kwargs):
+        context.update(kwargs)
+
+    def execute(self, mwa, context):
         if self._action is not None:
             self._action(mwa, context)
         else:
