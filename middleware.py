@@ -1,3 +1,5 @@
+import types
+
 class Middleware():
     def __init__(self, action=None):
         self._action = action
@@ -23,15 +25,15 @@ class Handler():
     def __setitem__(self, name, value):
         self._context[name] = value
 
-    def add(self, middleware):
-        if hasattr(middleware, '__call__'):
-            self.middleware_array.append(middleware)
-        else:
-            self.middleware_array.append(middleware().create())
-
     def set(self, middleware_array):
         for middleware in middleware_array:
             self.add(middleware)
+
+    def add(self, middleware):
+        if isinstance(middleware, types.FunctionType):
+            self.middleware_array.append(middleware)
+        else:
+            self.middleware_array.append(middleware().create())
 
     def execute(self):
         iteration = iter(self.middleware_array)

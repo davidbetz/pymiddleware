@@ -20,24 +20,30 @@ class AdditionMiddleware2(AdditionMiddleware1):
     pass
 
 
-class AdditionMiddleware3(AdditionMiddleware2):
+class AdditionMiddleware3(AdditionMiddleware1):
     pass
 
 
 class TestBuilderCreator(unittest.TestCase):
+    def test_add(self):
+        handler = Handler()
+        handler.add(AdditionMiddleware1)
+        handler.execute()
+        self.assertEqual(handler['counter'], 1)
+
     def test_chain(self):
         handler = Handler()
         handler.set([AdditionMiddleware1, AdditionMiddleware2])
         handler.add(AdditionMiddleware3)
         handler.execute()
-        self.assertEquals(handler['counter'], 3)
+        self.assertEqual(handler['counter'], 3)
 
     def test_init(self):
         handler = Handler(counter=1)
         handler.set([AdditionMiddleware1, AdditionMiddleware2])
         handler.add(AdditionMiddleware3)
         handler.execute()
-        self.assertEquals(handler['counter'], 4)
+        self.assertEqual(handler['counter'], 4)
 
     def test_hybrid(self):
         handler = Handler(counter=1)
@@ -47,8 +53,8 @@ class TestBuilderCreator(unittest.TestCase):
             context['myvalue'] = 12
         handler.add(inline)
         handler.execute()
-        self.assertEquals(handler['counter'], 4)
-        self.assertEquals(handler['myvalue'], 12)
+        self.assertEqual(handler['counter'], 4)
+        self.assertEqual(handler['myvalue'], 12)
 
     def test_adhoc(self):
         handler = Handler()
@@ -56,7 +62,7 @@ class TestBuilderCreator(unittest.TestCase):
             context['myvalue'] = 12
         handler.add(inline)
         handler.execute()
-        self.assertEquals(handler['myvalue'], 12)
+        self.assertEqual(handler['myvalue'], 12)
 
     def test_kwargs(self):
         handler = Handler(**{'a': 1, 'b': 2})
@@ -64,8 +70,7 @@ class TestBuilderCreator(unittest.TestCase):
             context['a'] = context['a'] + context['b']
         handler.add(inline)
         handler.execute()
-        self.assertEquals(handler['a'], 3)
-
+        self.assertEqual(handler['a'], 3)
 
 
 if __name__ == '__main__':
