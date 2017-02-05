@@ -4,4 +4,6 @@ python:
     - "3.5"
     - "3.6"
     - "nightly"
-script: pytest
+script: 
+    - if [[ "$TRAVIS_PYTHON_VERSION" == 2.7" ]]; then py.test; fi
+    - if [[ "$TRAVIS_PYTHON_VERSION" != "2.7" ]]; then pytest; fi
