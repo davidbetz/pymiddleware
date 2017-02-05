@@ -6,6 +6,8 @@
 
     pip install middleware
 
+[![Build Status](https://travis-ci.org/davidbetz/middleware.svg?branch=master)](https://travis-ci.org/davidbetz/middleware)
+
 ## Compatibility
 
 Python 2 and 3
