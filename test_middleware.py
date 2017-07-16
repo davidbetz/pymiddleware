@@ -1,6 +1,6 @@
 import unittest
 
-from middleware import Middleware, Handler
+from .middleware import Middleware, Handler
 
 class AdditionMiddleware1(Middleware):
     def create(self):
