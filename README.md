@@ -6,7 +6,7 @@
 
     pip install middleware
 
-[![Build Status](https://travis-ci.org/davidbetz/middleware.svg?branch=master)](https://travis-ci.org/davidbetz/middleware)
+[![Build Status](https://travis-ci.org/davidbetz/pymiddleware.svg?branch=master)](https://travis-ci.org/davidbetz/pymiddleware)
 [![PyPI version](https://badge.fury.io/py/middleware.svg)](https://badge.fury.io/py/middleware)
 
 ## Compatibility
