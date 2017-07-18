@@ -1,6 +1,9 @@
 import unittest
 
-from middleware import Middleware, Handler
+try:
+    from middleware import Middleware, Handler
+except:
+    from .middleware import Middleware, Handler
 
 class AdditionMiddleware1(Middleware):
     def create(self):
